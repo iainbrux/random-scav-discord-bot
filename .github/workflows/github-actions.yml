@@ -24,4 +24,12 @@ jobs:
         uses: borales/actions-yarn@v3.0.0
         with:
           cmd: start # will run "yarn start"
+      - name: Publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@v4
+        with:
+          name: random-scav-bot
+          username: ${{ steps.ecr.outputs.username }}
+          password: ${{ steps.ecr.outputs.password }}
+          registry: ${{ steps.ecr.outputs.registry }}
+          tags: "latest"
       - run: echo "🍏 This job's status is ${{ job.status }}."
