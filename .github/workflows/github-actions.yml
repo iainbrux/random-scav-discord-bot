@@ -14,12 +14,10 @@ jobs:
           access_key: ${{ secrets.AWS_ACCESS_KEY }}
           secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           region: ${{ secrets.AWS_REGION }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - uses: docker/setup-buildx-action@v2
-        id: buildx
-        with:
-          install: true
       - name: Install node.js & packages required
         uses: borales/actions-yarn@v3.0.0
         with:
@@ -28,8 +26,11 @@ jobs:
         uses: borales/actions-yarn@v3.0.0
         with:
           cmd: start # will run "yarn start"
-      - name: Build Docker Image
-        run: docker build . # will run buildx
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: user/app:latest
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@v4
         with:
