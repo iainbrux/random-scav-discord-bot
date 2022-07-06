@@ -1,12 +1,17 @@
 import { Client } from "discord.js";
 import { config } from "./config";
+import interactionCreate from "./listeners/interactionCreate";
+import ready from "./listeners/ready";
 
 console.log("Bot is starting...");
+
+const token = config.token;
 
 const client = new Client({
   intents: [],
 });
 
-// client.login(config.token);
+ready(client);
+interactionCreate(client);
 
-console.log("Succesfully logged in...");
+client.login(token);
