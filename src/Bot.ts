@@ -7,6 +7,6 @@ const client = new Client({
   intents: [],
 });
 
-client.login(config.token);
+// client.login(config.token);
 
 console.log("Succesfully logged in...");
