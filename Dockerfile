@@ -1,4 +1,4 @@
 FROM node:16
-COPY ./src src
+COPY . .
 RUN yarn install
 RUN yarn start
