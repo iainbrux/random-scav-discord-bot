@@ -4,8 +4,7 @@ on:
   push:
     branches:
       - "master"
-      - "deployment"
-      - "integration/*"
+      - "development"
 
 env:
   AWS_REGION: eu-west-1
