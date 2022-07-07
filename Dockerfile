@@ -1,4 +1,4 @@
 FROM node:16
-RUN npm install -g yarn
+COPY ./src src
 RUN yarn install
 RUN yarn start
