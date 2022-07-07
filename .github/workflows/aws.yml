@@ -38,6 +38,11 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
+      - name: Configure .env file
+        run: |
+          touch .env
+          echo "DISCORD_BOT_TOKEN=${{ secrets.DISCORD_BOT_TOKEN }}" >> .env
+
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
         env:
