@@ -39,13 +39,8 @@ export const Join: Command = {
         selfMute: false,
       });
 
-      const player = createAudioPlayer();
-      const resource = createAudioResource(join(__dirname, "108.mp3"));
-
       const channelName = client.channels.cache.get(channelId);
       content = `Joined ${channelName}, upachki!`;
-
-      player.play(resource);
 
       setTimeout(() => connection.destroy(), 10000);
     } catch (error) {
