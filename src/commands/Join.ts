@@ -42,9 +42,15 @@ export const Join: Command = {
       });
 
       const player = createAudioPlayer();
+      const resources = fs.readdirSync(join(__dirname, "../audio"));
+      const randomIndex = Math.floor(Math.random() * resources.length);
       const resource = createAudioResource(
-        fs.createReadStream(join(__dirname, "../audio/108.mp3"))
+        fs.createReadStream(
+          join(__dirname, `../audio/${resources[randomIndex]}`)
+        )
       );
+
+      console.log("randomIndex", randomIndex);
 
       const channelName = client.channels.cache.get(channelId);
       content = `Joined ${channelName}, upachki!`;
@@ -52,7 +58,7 @@ export const Join: Command = {
       connection.subscribe(player);
       player.play(resource);
 
-      setTimeout(() => connection.destroy(), 10000);
+      player.on(AudioPlayerStatus.Idle, () => connection.destroy());
     } catch (error) {
       content = `Cyka Blyat! Error with command /${interaction?.commandName}.`;
     }
