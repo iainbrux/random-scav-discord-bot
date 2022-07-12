@@ -1,4 +1,5 @@
 import {
+  AudioPlayerStatus,
   createAudioPlayer,
   createAudioResource,
   joinVoiceChannel,
@@ -11,6 +12,7 @@ import {
 } from "discord.js";
 import { Command } from "../Command";
 import { join } from "node:path";
+import fs from "fs";
 
 type JoinInteraction = Interaction & BaseCommandInteraction;
 
@@ -39,8 +41,16 @@ export const Join: Command = {
         selfMute: false,
       });
 
+      const player = createAudioPlayer();
+      const resource = createAudioResource(
+        fs.createReadStream(join(__dirname, "../audio/108.mp3"))
+      );
+
       const channelName = client.channels.cache.get(channelId);
       content = `Joined ${channelName}, upachki!`;
+
+      connection.subscribe(player);
+      player.play(resource);
 
       setTimeout(() => connection.destroy(), 10000);
     } catch (error) {
