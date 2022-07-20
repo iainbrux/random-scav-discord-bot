@@ -17,7 +17,7 @@ export const Join: Command = {
     const member = interaction.member as GuildMember;
     const channelId = member.voice.channelId;
 
-    let content = "";
+    let content: string;
 
     try {
       handleJoinChannel(interaction);
